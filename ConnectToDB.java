@@ -43,6 +43,24 @@ public class ConnectToDB {
         }
     }
 
+    public void create_account_table(Connection conn, String table_name) {
+        /**
+         * Creates user account table
+         * 
+         * @param Connection conn
+         * @param String     table_name
+         */
+        try {
+            String query = "create table " + table_name
+                    + "(user_id SERIAL, username varchar(200), password varchar(200), firstName varchar(200), lastName varchar(200), primary key(user_id));";
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Table created: " + table_name);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void insert_row(Connection conn, String table_name, String name, String address) {
         /**
          * Inserts a row to the selected table
@@ -142,10 +160,9 @@ public class ConnectToDB {
          * Updates name column by where name equals to name
          * 
          * @param Connection conn
-         * @param String table_name
-         * @param String table_name
-         * @param String update_name
-         * @param String name
+         * @param String     table_name
+         * @param String     update_name
+         * @param String     name
          * 
          */
         String query = String.format("UPDATE %s SET name='%s' WHERE name='%s';", table_name, update_name, name);
@@ -157,6 +174,40 @@ public class ConnectToDB {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
+
+    public void add_user(Connection conn, String username, String hashed_password, String first_name,
+            String last_name) {
+        /**
+         * Creates user to account db
+         * 
+         * @param Connection conn
+         * @param String     table_name
+         * @param String     username
+         * @param String     hashed_password
+         * @param String     first_name
+         * @param String     last_name
+         * 
+         */
+        Statement statement;
+        try {
+            String query = String.format("insert into users (username, password, firstname, lastname) values ('%s', '%s', '%s', '%s');", username,
+                    hashed_password, first_name, last_name);
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Row inserted!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // public void getHashedPWByUsername(Connection conn, String username) {
+    //     String query;
+    //     try {
+    //         query = ""
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
+    // }
+
 }
