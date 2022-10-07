@@ -35,13 +35,11 @@ public class Main {
         // }
 
         // String PASSWORD = System.getenv("PASSWORD");
-        MyFrame frame = new MyFrame();
+        new MyFrame();
         // RegisterFrame regFrame = new RegisterFrame();
 
-        ConnectToDB db = new ConnectToDB();
-        Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
-        String hashedPASS = db.get_hash_by_username(conn, "users", "12");
-        System.out.println(hashedPASS);
+        // ConnectToDB db = new ConnectToDB();
+        // Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
 
         // System.getenv("PASSWORD"));
         // db.create_account_table(conn, "users");

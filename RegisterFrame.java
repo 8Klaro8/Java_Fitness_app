@@ -16,9 +16,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
     JPasswordField passwordTextfield;
     JPasswordField passwordTextfieldRep;
     JButton registerButton;
+    JButton backToLogin;
     JCheckBox showPassword;
 
-    public RegisterFrame() {
+    RegisterFrame() {
         hashPW = new HashPassword();
         container = getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
@@ -38,6 +39,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         passwordTextfield = new JPasswordField();
         passwordTextfieldRep = new JPasswordField();
         registerButton = new JButton("Register");
+        backToLogin = new JButton("Back to Login");
         showPassword = new JCheckBox("Show Password");
 
         // set icon
@@ -78,6 +80,9 @@ public class RegisterFrame extends JFrame implements ActionListener {
         showPassword.setLocation(95, 230);
         registerButton.setSize(new Dimension(100, 30));
         registerButton.setLocation(125, 280);
+        backToLogin.setSize(new Dimension(150, 30));
+        backToLogin.setLocation(100, 320);
+        
     }
 
     // Adds all components to 'container'
@@ -89,6 +94,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.container.add(passwordTextfield);
         this.container.add(passwordTextfieldRep);
         this.container.add(registerButton);
+        this.container.add(backToLogin);
         this.container.add(showPassword);
     }
 
@@ -96,6 +102,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
     public void addActionEvent() {
         registerButton.addActionListener(this);
         showPassword.addActionListener(this);
+        backToLogin.addActionListener(this);
     }
 
     @Override
@@ -124,6 +131,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     System.out.println(err.getMessage());
                 }
             }
+        }
+        else if (e.getSource() == backToLogin) {
+            this.dispose();
+            new MyFrame();
         }
 
     }

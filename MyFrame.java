@@ -75,7 +75,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     // Sets up login screen/ frame
     public void LoginFrame() {
-        // this.setLayoutManager(); - NOT USED
+        this.setLayoutManager();
         this.setLocationAndSize();
         this.addComponentsToContainer();
         this.addActionEvent();
