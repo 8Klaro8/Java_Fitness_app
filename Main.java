@@ -35,7 +35,6 @@ public class Main {
         // }
 
         // String PASSWORD = System.getenv("PASSWORD");
-
         MyFrame frame = new MyFrame();
         // RegisterFrame regFrame = new RegisterFrame();
 
