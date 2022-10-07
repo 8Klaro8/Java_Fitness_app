@@ -201,13 +201,27 @@ public class ConnectToDB {
         }
     }
 
-    // public void getHashedPWByUsername(Connection conn, String username) {
-    //     String query;
-    //     try {
-    //         query = ""
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //     }
-    // }
+    public String get_hash_by_username(Connection conn, String table_name, String username) {
+        /**
+         * Prints all feld of the searched item
+         * 
+         * @param Connection conn
+         * @param String     table_name
+         * @param String     name
+         */
+        Statement statement;
+        try {
+            String query = String.format("select password, user_id from %s where username='%s'", table_name, username);
+            statement = conn.createStatement();
+            ResultSet resSet = statement.executeQuery(query);
+            if (resSet.next()){
+                return resSet.getString("password");
+            }
+     
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "EMPTY";
+    }
 
 }

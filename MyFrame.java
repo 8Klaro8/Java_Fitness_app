@@ -32,6 +32,7 @@ public class MyFrame extends JFrame implements ActionListener {
     // initialize container
     Container container;
     HashPassword hashPWD;
+    String name;
 
     // labels & buttons
     JLabel userLabel;
@@ -132,6 +133,7 @@ public class MyFrame extends JFrame implements ActionListener {
             // get account by username for password checking
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
+            String storedPassword = db.get_hash_by_username(conn, "users", userText);
 
             try {
                 if (hashPWD.validatePassword(givenPWD, storedPassword)) {
