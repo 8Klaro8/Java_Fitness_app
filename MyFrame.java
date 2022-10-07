@@ -27,7 +27,7 @@ import java.sql.Connection;
 import java.awt.*;
 import javax.swing.*;
 
-public class MyFrame extends JFrame implements ActionListener {
+public class MyFrame extends JFrame implements ActionListener, LoginFormInterFace {
 
     // initialize container
     Container container;
@@ -130,6 +130,10 @@ public class MyFrame extends JFrame implements ActionListener {
             String givenPWD = String.valueOf(passwordTextfield.getPassword());
             hashPWD = new HashPassword();
 
+            if (userText.isEmpty() || givenPWD.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Username and Password fields can't be empty.");
+            }
+
             // get account by username for password checking
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
@@ -151,16 +155,21 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
         } else if (e.getSource() == showPassword) {
-            if (showPassword.isSelected()) {
-                passwordTextfield.setEchoChar((char) 0);
-            } else {
-                passwordTextfield.setEchoChar('*');
-            }
+            ShowPassword(showPassword);
         } else if (e.getSource() == registerButton) {
             // dispose login page
             this.dispose();
             // creating register frame/page
             new RegisterFrame();
+        }
+    }
+
+    @Override
+    public void ShowPassword(JCheckBox showPassword) {
+        if (showPassword.isSelected()) {
+            passwordTextfield.setEchoChar((char) 0);
+        } else {
+            passwordTextfield.setEchoChar('*');
         }
     }
 }

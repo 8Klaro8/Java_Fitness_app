@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
 
-public class RegisterFrame extends JFrame implements ActionListener {
+public class RegisterFrame extends JFrame implements ActionListener, LoginFormInterFace {
     // initialize container
     Container container;
     HashPassword hashPW;
@@ -118,6 +118,11 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 passwordTextfieldRep.setText("");
             } else {
                 String username = userTextfield.getText();
+
+                if (username.isEmpty() || pwd_string_1.isEmpty() || pwd_string_2.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Username and Password fields can't be empty.");
+                    return;
+                }
                 // hash passwod
                 try {
                     String hashedPW = hashPW.generateStorngPasswordHash(pwd_string_1);
@@ -125,6 +130,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     ConnectToDB db = new ConnectToDB();
                     Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
                     db.add_user(conn, username, hashedPW, "null", "null");
+
+                    // TODO - show message only if user added indeed.
                     JOptionPane.showMessageDialog(this, "User: " + username + " has been registered!");
 
                 } catch (Exception err) {
@@ -136,7 +143,22 @@ public class RegisterFrame extends JFrame implements ActionListener {
             this.dispose();
             new MyFrame();
         }
+        else if(e.getSource() == showPassword){
+            ShowPassword(showPassword);
+        }
 
+    }
+
+    @Override
+    public void ShowPassword(JCheckBox showPassword) {
+        if (showPassword.isSelected()) {
+            passwordTextfield.setEchoChar((char) 0);
+            passwordTextfieldRep.setEchoChar((char) 0);
+
+        } else {
+            passwordTextfield.setEchoChar('*');
+            passwordTextfieldRep.setEchoChar('*');
+        }
     }
 
 }
