@@ -1,31 +1,16 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.LayoutManager;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.*;
-
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.DimensionUIResource;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.awt.*;
-import javax.swing.*;
 
 public class MyFrame extends JFrame implements ActionListener, LoginFormInterFace {
 
@@ -137,7 +122,7 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
             // get account by username for password checking
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
-            String storedPassword = db.get_hash_by_username(conn, "users", userText);
+            String storedPassword = db.get_hash_by_username(conn, "my_users", userText);
 
             try {
                 if (hashPWD.validatePassword(givenPWD, storedPassword)) {
