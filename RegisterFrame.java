@@ -18,6 +18,8 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
     JButton registerButton;
     JButton backToLogin;
     JCheckBox showPassword;
+    final String BASE_PROF_PIC = "ProfilePics/basic_prif_pic.png";
+
 
     RegisterFrame() {
         hashPW = new HashPassword();
@@ -125,11 +127,12 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
                 }
                 // hash passwod
                 try {
+                    // basic profile image
                     String hashedPW = hashPW.generateStorngPasswordHash(pwd_string_1);
                     // Store user
                     ConnectToDB db = new ConnectToDB();
                     Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
-                    db.add_user(conn, username, hashedPW, "null", "null");
+                    db.add_user(conn, username, hashedPW, "null", "null", BASE_PROF_PIC);
 
                     // TODO - show message only if user added indeed.
                     JOptionPane.showMessageDialog(this, "User: " + username + " has been registered!");

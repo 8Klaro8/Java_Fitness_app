@@ -52,7 +52,7 @@ public class ConnectToDB {
          */
         try {
             String query = "create table " + table_name
-                    + "(user_id SERIAL, username varchar(200), password varchar(200), firstName varchar(200), lastName varchar(200), primary key(user_id));";
+                    + "(user_id SERIAL, prof_image varchar(200), username varchar(200), password varchar(200), firstName varchar(200), lastName varchar(200), primary key(user_id));";
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Table created: " + table_name);
@@ -177,7 +177,7 @@ public class ConnectToDB {
     }
 
     public void add_user(Connection conn, String username, String hashed_password, String first_name,
-            String last_name) {
+            String last_name, String profPic) {
         /**
          * Creates user to account db
          * 
@@ -191,8 +191,8 @@ public class ConnectToDB {
          */
         Statement statement;
         try {
-            String query = String.format("insert into users (username, password, firstname, lastname) values ('%s', '%s', '%s', '%s');", username,
-                    hashed_password, first_name, last_name);
+            String query = String.format("insert into my_users (username, password, firstname, lastname, prof_image) values ('%s', '%s', '%s', '%s', '%s');", username,
+                    hashed_password, first_name, last_name, profPic);
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Row inserted!");
@@ -222,6 +222,21 @@ public class ConnectToDB {
             System.out.println(e.getMessage());
         }
         return "EMPTY";
+    }
+
+    public String get_prof_pic_path(Connection conn, String table_name, String username) {
+        String query = String.format("select prof_image from %s where username='%s'", table_name, username);
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resSet = statement.executeQuery(query);
+            if(resSet.next()){
+                return resSet.getString("prof_image");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }
