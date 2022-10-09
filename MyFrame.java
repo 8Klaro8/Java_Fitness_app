@@ -12,9 +12,14 @@ import java.awt.event.ActionListener;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.awt.*;
 
 public class MyFrame extends JFrame implements ActionListener, LoginFormInterFace {
+
+    // estabilish connection to DB
+    ConnectToDB db = new ConnectToDB();
+    Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
 
     // initialize container
     Container container;
@@ -123,11 +128,7 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
                 JOptionPane.showMessageDialog(this, "Username and Password fields can't be empty.");
             }
 
-            // get account by username for password checking
-            ConnectToDB db = new ConnectToDB();
-            Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
             String storedPassword = db.get_hash_by_username(conn, TABLE_NAME, userText);
-
             try {
                 if (hashPWD.validatePassword(givenPWD, storedPassword)) {
                     JOptionPane.showMessageDialog(this, "Login Successful!");
@@ -136,8 +137,8 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
                     // write current user to file
                     Path fileName = Path.of(CURR_USER_FILE_PATH);
                     Files.writeString(fileName, userText);
-                    //LOGIN
-                    //change to home page
+                    // LOGIN
+                    // change to home page
                     this.dispose();
                     new HomeSite();
                 } else {
@@ -146,9 +147,19 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
                     passwordTextfield.setText("");
                 }
             } catch (Exception err) {
+                // check if user is NOT exists and give respond to it
+                try {
+                    ResultSet userFount =  db.get_by_name(conn, "my_users", userText);
+                    if (userFount == null) {
+                        JOptionPane.showMessageDialog(this, "The username: " + userText + " is not registered yet.");
+                        userTextfield.setText("");
+                        passwordTextfield.setText("");
+                    }
+                } catch (Exception err_2) {
+                    System.out.println(err_2.getMessage());
+                }
                 System.out.println(err.getMessage());
             }
-
 
         } else if (e.getSource() == showPassword) {
             ShowPassword(showPassword);

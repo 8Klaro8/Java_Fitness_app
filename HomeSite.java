@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +28,9 @@ public class HomeSite extends JFrame implements ActionListener {
     Container container;
     JLabel profPicLabel;
     JLabel labelImage;
+    JButton logout;
     SetProfileImage setProf = new SetProfileImage();
+    public final String USER_FILE_PATH = "current_user/current_user.txt";
 
 
     HomeSite() throws IOException {
@@ -44,13 +47,14 @@ public class HomeSite extends JFrame implements ActionListener {
 
         // labels & buttons
         profPicLabel = new JLabel();
+        logout = new JButton("Logout");
 
         // add image to label
         // TODO insert here current prof pic path from db
         ConnectToDB db = new ConnectToDB();
         Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
         // read current user from txt file
-        Path fileName = Path.of("current_user/current_user.txt");
+        Path fileName = Path.of(USER_FILE_PATH);
         String currentUser = Files.readString(fileName);
         // TODO get current user's username who is logged in
         String baseProfPic = db.get_prof_pic_path(conn, "my_users", currentUser);
@@ -82,21 +86,36 @@ public class HomeSite extends JFrame implements ActionListener {
     public void setLocationAndSize() {
         profPicLabel.setSize(new Dimension(100, 100));
         profPicLabel.setLocation(135, 30);
+        logout.setSize(new Dimension(80,30));
+        logout.setLocation(250, 20);
     }
 
     // Adds all components to 'container'
     public void addComponentsToContainer() {
         this.container.add(profPicLabel);
+        this.container.add(logout);
+    }
+
+    public void logut_from_app() throws IOException {
+        // re-writing current user to "" & logout
+        LogoutFunction logoutFun = new LogoutFunction();
+        logoutFun.logout_from_app(this);
     }
 
     // add action event
     public void addActionEvent() {
-
+        logout.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == logout) {
+            try {
+                logut_from_app();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }
 

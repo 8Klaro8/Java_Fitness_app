@@ -133,7 +133,9 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
                     ConnectToDB db = new ConnectToDB();
                     Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
                     db.add_user(conn, username, hashedPW, "null", "null", BASE_PROF_PIC);
-
+                    // login freshly registered user
+                    this.dispose();
+                    new HomeSite();
                     // TODO - show message only if user added indeed.
                     JOptionPane.showMessageDialog(this, "User: " + username + " has been registered!");
 
