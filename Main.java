@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -18,11 +19,11 @@ import javax.swing.text.Style;
  * Main
  */
 public class Main {
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, IOException {
 
 
         new MyFrame();
-
+        // new HomeSite();
         // ConnectToDB db = new ConnectToDB();
         // Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
 

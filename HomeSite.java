@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.awt.image.BufferedImage;
 
@@ -47,8 +49,11 @@ public class HomeSite extends JFrame implements ActionListener {
         // TODO insert here current prof pic path from db
         ConnectToDB db = new ConnectToDB();
         Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
+        // read current user from txt file
+        Path fileName = Path.of("current_user/current_user.txt");
+        String currentUser = Files.readString(fileName);
         // TODO get current user's username who is logged in
-        db.get_prof_pic_path(conn, "my_users", getName())
+        String baseProfPic = db.get_prof_pic_path(conn, "my_users", currentUser);
         profPicLabel = setProf.setBasicProfPic(profPicLabel, baseProfPic);
 
         // set icon

@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.awt.*;
 
@@ -18,6 +20,8 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
     Container container;
     HashPassword hashPWD;
     String name;
+    public final String TABLE_NAME = "my_users";
+    public final String CURR_USER_FILE_PATH = "current_user/current_user.txt";
 
     // labels & buttons
     JLabel userLabel;
@@ -122,13 +126,20 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
             // get account by username for password checking
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
-            String storedPassword = db.get_hash_by_username(conn, "my_users", userText);
+            String storedPassword = db.get_hash_by_username(conn, TABLE_NAME, userText);
 
             try {
                 if (hashPWD.validatePassword(givenPWD, storedPassword)) {
                     JOptionPane.showMessageDialog(this, "Login Successful!");
                     userTextfield.setText("");
                     passwordTextfield.setText("");
+                    // write current user to file
+                    Path fileName = Path.of(CURR_USER_FILE_PATH);
+                    Files.writeString(fileName, userText);
+                    //LOGIN
+                    //change to home page
+                    this.dispose();
+                    new HomeSite();
                 } else {
                     JOptionPane.showMessageDialog(this, "Wrong password");
                     userTextfield.setText("");
