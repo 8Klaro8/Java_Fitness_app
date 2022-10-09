@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.OptionPaneUI;
 import javax.swing.plaf.metal.OceanTheme;
 
@@ -29,6 +30,7 @@ public class HomeSite extends JFrame implements ActionListener {
     JLabel profPicLabel;
     JLabel labelImage;
     JButton logout;
+    JButton changeProfilePic;
     SetProfileImage setProf = new SetProfileImage();
     public final String USER_FILE_PATH = "current_user/current_user.txt";
 
@@ -48,6 +50,7 @@ public class HomeSite extends JFrame implements ActionListener {
         // labels & buttons
         profPicLabel = new JLabel();
         logout = new JButton("Logout");
+        changeProfilePic = new JButton("Change Profile");
 
         // add image to label
         // TODO insert here current prof pic path from db
@@ -88,12 +91,16 @@ public class HomeSite extends JFrame implements ActionListener {
         profPicLabel.setLocation(135, 30);
         logout.setSize(new Dimension(80,30));
         logout.setLocation(250, 20);
+        changeProfilePic.setSize(new Dimension(120, 30));
+        changeProfilePic.setLocation(125, 130);
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
     // Adds all components to 'container'
     public void addComponentsToContainer() {
         this.container.add(profPicLabel);
         this.container.add(logout);
+        this.container.add(changeProfilePic);
     }
 
     public void logut_from_app() throws IOException {
