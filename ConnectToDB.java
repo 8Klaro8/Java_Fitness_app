@@ -239,4 +239,14 @@ public class ConnectToDB {
         return null;
     }
 
+    public void set_prof_pic_path(Connection conn, String table_name, String updated_value, String username) {
+        String query = String.format("update %s set prof_image='%s' where username='%s'", table_name, updated_value, username);
+        try {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
