@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -107,9 +108,9 @@ public class ChangeProfile extends JFrame implements ActionListener {
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
             // TODO: get right image path to update to
-            profPicButton.get
+            String iconOfButton = profPicButton.getIcon().toString();
             try {
-                db.set_prof_pic_path(conn, "my_users", getWarningString(), get_current_user());
+                db.set_prof_pic_path(conn, "my_users", iconOfButton, get_current_user());
 
             } catch (Exception err) {
                 System.out.println(err.getMessage());
