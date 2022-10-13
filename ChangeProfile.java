@@ -33,7 +33,6 @@ public class ChangeProfile extends JFrame implements ActionListener {
     static final int COLUMNS = 3;
     static final int ROWS = 15;
     JButton profPicButton;
-    JButton testButton;
     public final String USER_FILE_PATH = "current_user/current_user.txt";
     JPanel panel;
 
@@ -60,23 +59,13 @@ public class ChangeProfile extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         // getting all prof. pic path
         ArrayList<String> all_prof_path = get_all_prof_pic_path();
-        // transform arraylist to object[] then String[]
         Object[] objAllPathArray = all_prof_path.toArray();
         String[] strAllPathArray = new String[objAllPathArray.length];
         int numOfPics = strAllPathArray.length;
         for (int i = 0; i < objAllPathArray.length; i++) {
-
             strAllPathArray[i] = String.valueOf(objAllPathArray[i]);
         }
-
         panel.setLayout(new GridLayout(ROWS, COLUMNS, 10, 10));
-        // crreating test button
-        testButton = new JButton();
-        testButton.setSize(new Dimension(100, 100));
-        testButton.setLocation(100, 100);
-        panel.add(testButton);
-        testButton.addActionListener(this);
-
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < numOfPics; j++) {
                 profPicButton = new JButton();
@@ -85,23 +74,20 @@ public class ChangeProfile extends JFrame implements ActionListener {
                 if (lastElement.equals(currElement)) {
                     return panel;
                 }
-                profPicButton.setActionCommand("String.valueOf(j)");
-
-                // Set the current image to a JButton and adds it to panel
+                // Set the current image(icon) to a JButton and adds it to panel
                 profPicButton = set_prof_pic_images(strAllPathArray[j], profPicButton);
-                // profPicButton.addActionListener(e -> onButtnClick(profPicButton.getIcon(),
-                // profPicButton));
-                // profPicButton.addActionListener(numberAction);
+                // sets icons path as action command (just like a parameter)
                 profPicButton.setActionCommand("" + profPicButton.getIcon());
+                // adds action listener
                 profPicButton.addActionListener(numberAction);
-
+                // adds current button to the panel
                 panel.add(profPicButton);
             }
         }
-
         return panel;
     }
 
+    // sets the right image to the button as icon
     public JButton set_prof_pic_images(String picPath, JButton button) {
         ImageIcon imageIcon = new ImageIcon(picPath);
         Image resizedImage = imageIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -125,42 +111,21 @@ public class ChangeProfile extends JFrame implements ActionListener {
         }
     }
 
+    // inherited this function because must inherit but it is not used. Instead userd new action created: 'numberAction'
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == testButton) {
-            System.out.println("YEES");
-        }
-        if (e.getSource() == profPicButton) {
-            // find clicked button
-            System.out.println("YES");
-            JButton clickedButton = (JButton) e.getSource();
-            System.out.println(clickedButton);
-            ConnectToDB db = new ConnectToDB();
-            Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
-            System.out.println("YEEES");
-
-            // TODO: get right image path to update to
-            String iconOfButton = profPicButton.getIcon().toString();
-            try {
-                db.set_prof_pic_path(conn, "my_users", iconOfButton, get_current_user());
-
-            } catch (Exception err) {
-                System.out.println(err.getMessage());
-            }
-        }
-
     }
 
+    // gets the currnetly logged in user
     public String get_current_user() throws IOException {
         Path fileName = Path.of(USER_FILE_PATH);
         return Files.readString(fileName);
-
     }
 
     Action numberAction = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // display.setCaretPosition( display.getDocument().getLength() );
+            // gets profile pics path from set actioncommand
             String profPicPath = e.getActionCommand();
             ConnectToDB db = new ConnectToDB();
             Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
@@ -173,7 +138,8 @@ public class ChangeProfile extends JFrame implements ActionListener {
         }
     };
 
-    public void go_back_to_homesite() throws IOException{
+    // leads to home page
+    public void go_back_to_homesite() throws IOException {
         this.dispose();
         new HomeSite();
     }

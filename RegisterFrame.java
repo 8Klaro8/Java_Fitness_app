@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.Connection;
 
 public class RegisterFrame extends JFrame implements ActionListener, LoginFormInterFace {
@@ -48,7 +49,6 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
         ImageIcon image = new ImageIcon("Logo/lgo.png");
         this.setIconImage(image.getImage());
         this.getContentPane().setBackground(Color.WHITE);
-
         RegisterFrame();
     }
 
@@ -120,22 +120,20 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
                 passwordTextfieldRep.setText("");
             } else {
                 String username = userTextfield.getText();
-
                 if (username.isEmpty() || pwd_string_1.isEmpty() || pwd_string_2.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Username and Password fields can't be empty.");
                     return;
                 }
-                // hash passwod
+                // Hash password
                 try {
-                    // basic profile image
+                    // Basic profile image
                     String hashedPW = hashPW.generateStorngPasswordHash(pwd_string_1);
                     // Store user
                     ConnectToDB db = new ConnectToDB();
                     Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
                     db.add_user(conn, username, hashedPW, "null", "null", BASE_PROF_PIC);
-                    // login freshly registered user
-                    this.dispose();
-                    new HomeSite();
+                    // Login freshly registered user
+                    go_back_to_homesite();
                     // TODO - show message only if user added indeed.
                     JOptionPane.showMessageDialog(this, "User: " + username + " has been registered!");
 
@@ -145,25 +143,33 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
             }
         }
         else if (e.getSource() == backToLogin) {
-            this.dispose();
-            new MyFrame();
+            go_to_login_page();
         }
         else if(e.getSource() == showPassword){
             ShowPassword(showPassword);
         }
-
     }
 
+    // Show password
     @Override
     public void ShowPassword(JCheckBox showPassword) {
         if (showPassword.isSelected()) {
             passwordTextfield.setEchoChar((char) 0);
             passwordTextfieldRep.setEchoChar((char) 0);
-
         } else {
             passwordTextfield.setEchoChar('*');
             passwordTextfieldRep.setEchoChar('*');
         }
+    }
+
+    // Page changing
+    public void go_to_login_page() {
+        this.dispose();
+        new MyFrame();
+    }
+    public void go_back_to_homesite() throws IOException {
+        this.dispose();
+        new HomeSite();
     }
 
 }
