@@ -10,8 +10,7 @@ import javax.swing.plaf.LabelUI;
 
 public class SetProfileImage {
     public JLabel setBasicProfPic(JLabel label, String picPath) {
-
-        // TODO - look into databse and set profile pic based on that.
+        // TODO - looks into database and set profile pic based on that.
         ImageIcon imageIcon = new ImageIcon(picPath);
         Image resizedImage = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(resizedImage, imageIcon.getDescription());

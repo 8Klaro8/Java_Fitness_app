@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class ConnectToDB {
 
     public Connection connect_to_db(String dbname, String user, String password) {
+        
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");
@@ -191,7 +192,9 @@ public class ConnectToDB {
          */
         Statement statement;
         try {
-            String query = String.format("insert into my_users (username, password, firstname, lastname, prof_image) values ('%s', '%s', '%s', '%s', '%s');", username,
+            String query = String.format(
+                    "insert into my_users (username, password, firstname, lastname, prof_image) values ('%s', '%s', '%s', '%s', '%s');",
+                    username,
                     hashed_password, first_name, last_name, profPic);
             statement = conn.createStatement();
             statement.executeUpdate(query);
@@ -214,10 +217,10 @@ public class ConnectToDB {
             String query = String.format("select password, user_id from %s where username='%s'", table_name, username);
             statement = conn.createStatement();
             ResultSet resSet = statement.executeQuery(query);
-            if (resSet.next()){
+            if (resSet.next()) {
                 return resSet.getString("password");
             }
-     
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -225,11 +228,19 @@ public class ConnectToDB {
     }
 
     public String get_prof_pic_path(Connection conn, String table_name, String username) {
+        /**
+         * Gets the proile pics path by userame
+         * 
+         * @param Connection conn
+         * @param String     table_name
+         * @param String     username
+         * 
+         */
         String query = String.format("select prof_image from %s where username='%s'", table_name, username);
         try {
             Statement statement = conn.createStatement();
             ResultSet resSet = statement.executeQuery(query);
-            if(resSet.next()){
+            if (resSet.next()) {
                 return resSet.getString("prof_image");
             }
 
@@ -240,7 +251,17 @@ public class ConnectToDB {
     }
 
     public void set_prof_pic_path(Connection conn, String table_name, String updated_value, String username) {
-        String query = String.format("update %s set prof_image='%s' where username='%s'", table_name, updated_value, username);
+        /**
+         * Sets the current users profile pic by path
+         * 
+         * @param Connection conn
+         * @param String     table_name
+         * @param String     updated_value
+         * @param String     username
+         * 
+         */
+        String query = String.format("update %s set prof_image='%s' where username='%s'", table_name, updated_value,
+                username);
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);

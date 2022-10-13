@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -62,9 +63,7 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
         ImageIcon image = new ImageIcon("Logo/lgo.png");
         this.setIconImage(image.getImage());
         this.getContentPane().setBackground(Color.WHITE);
-
         LoginFrame();
-
     }
 
     // Sets up login screen/ frame
@@ -120,14 +119,12 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             String userText;
-            userText = userTextfield.getText();
             String givenPWD = String.valueOf(passwordTextfield.getPassword());
+            userText = userTextfield.getText();
             hashPWD = new HashPassword();
-
             if (userText.isEmpty() || givenPWD.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Username and Password fields can't be empty.");
             }
-
             String storedPassword = db.get_hash_by_username(conn, TABLE_NAME, userText);
             try {
                 if (hashPWD.validatePassword(givenPWD, storedPassword)) {
@@ -137,10 +134,8 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
                     // write current user to file
                     Path fileName = Path.of(CURR_USER_FILE_PATH);
                     Files.writeString(fileName, userText);
-                    // LOGIN
-                    // change to home page
-                    this.dispose();
-                    new HomeSite();
+                    // change to home page/ aka LOGIN
+                    login_to_home();
                 } else {
                     JOptionPane.showMessageDialog(this, "Wrong password");
                     userTextfield.setText("");
@@ -149,7 +144,7 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
             } catch (Exception err) {
                 // check if user is NOT exists and give respond to it
                 try {
-                    ResultSet userFount =  db.get_by_name(conn, "my_users", userText);
+                    ResultSet userFount = db.get_by_name(conn, "my_users", userText);
                     if (userFount == null) {
                         JOptionPane.showMessageDialog(this, "The username: " + userText + " is not registered yet.");
                         userTextfield.setText("");
@@ -160,14 +155,14 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
                 }
                 System.out.println(err.getMessage());
             }
-
         } else if (e.getSource() == showPassword) {
             ShowPassword(showPassword);
         } else if (e.getSource() == registerButton) {
-            // dispose login page
-            this.dispose();
-            // creating register frame/page
-            new RegisterFrame();
+            try {
+                go_to_register_page();
+            } catch (Exception err) {
+                err.getMessage();
+            }
         }
     }
 
@@ -178,6 +173,14 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
         } else {
             passwordTextfield.setEchoChar('*');
         }
+    }
+    public void login_to_home() throws IOException {
+        this.dispose();
+        new HomeSite();
+    }
+    public void go_to_register_page() throws IOException {
+        this.dispose();
+        new RegisterFrame();
     }
 }
 

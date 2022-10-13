@@ -22,8 +22,8 @@ public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, IOException {
 
 
-        new ChangeProfile();
-        // new MyFrame();
+        // new ChangeProfile();
+        new MyFrame();
         // new HomeSite();
         // ConnectToDB db = new ConnectToDB();
         // Connection conn = db.connect_to_db("accounts", "postgres", System.getenv("PASSWORD"));
