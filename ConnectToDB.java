@@ -244,6 +244,7 @@ public class ConnectToDB {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
+            System.out.println("Prof pic has been changed");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

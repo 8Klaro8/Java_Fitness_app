@@ -34,7 +34,6 @@ public class HomeSite extends JFrame implements ActionListener {
     SetProfileImage setProf = new SetProfileImage();
     public final String USER_FILE_PATH = "current_user/current_user.txt";
 
-
     HomeSite() throws IOException {
 
         container = getContentPane();
@@ -89,7 +88,7 @@ public class HomeSite extends JFrame implements ActionListener {
     public void setLocationAndSize() {
         profPicLabel.setSize(new Dimension(100, 100));
         profPicLabel.setLocation(135, 30);
-        logout.setSize(new Dimension(80,30));
+        logout.setSize(new Dimension(80, 30));
         logout.setLocation(250, 20);
         changeProfilePic.setSize(new Dimension(120, 30));
         changeProfilePic.setLocation(125, 130);
@@ -112,6 +111,7 @@ public class HomeSite extends JFrame implements ActionListener {
     // add action event
     public void addActionEvent() {
         logout.addActionListener(this);
+        changeProfilePic.addActionListener(this);
     }
 
     @Override
@@ -122,7 +122,20 @@ public class HomeSite extends JFrame implements ActionListener {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+        } else if (e.getSource() == changeProfilePic) {
+            this.dispose();
+            try {
+                go_to_ChangeProfile();
+
+            } catch (Exception err) {
+                System.out.println(err.getMessage());
+            }
         }
+    }
+
+    public void go_to_ChangeProfile() throws IOException {
+        this.dispose();
+        new ChangeProfile();
     }
 }
 
