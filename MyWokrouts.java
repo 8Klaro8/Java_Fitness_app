@@ -58,12 +58,11 @@ public class MyWokrouts extends JFrame implements ActionListener {
         topBar.setLayout(new BoxLayout(topBar, BoxLayout.Y_AXIS));
         return topBar;
     }
-
-    // scrollable panel with workouts
+    // TEST---------------------------------------------------------------------------------------------------------------------------------
     public JPanel createPanel() {
         // TODO: Display prof. pics in 3 columns
         JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(BORDER_NUMBER, BORDER_NUMBER, BORDER_NUMBER, BORDER_NUMBER));
+        panel.setBorder(new EmptyBorder(BORDER_NUMBER, BORDER_NUMBER, BORDER_NUMBER, 25));
         String[][] workoutExamples = new String[][] {
                 { "Workout 1", "Rep", "Kcal", "tempWorkoutIcons/fitness.png" },
                 { "Workout 2", "Rep", "Kcal", "tempWorkoutIcons/workout.png" },
@@ -75,31 +74,62 @@ public class MyWokrouts extends JFrame implements ActionListener {
                 { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
                 { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
                 { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 1", "Rep", "Kcal", "tempWorkoutIcons/fitness.png" },
-                { "Workout 2", "Rep", "Kcal", "tempWorkoutIcons/workout.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
-                { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
         };
-
-        // panel.setLayout(new GridLayout(workoutExamples.length, 10, 10,10));
-        panel.setLayout(new GridLayout(0, 1, 0, 10));
-        for (int i = 0; i < workoutExamples.length; i++) {
+        panel.setLayout(new GridLayout(workoutExamples.length, 1, 10, 10));
             for (int j = 0; j < workoutExamples.length; j++) {
-                workoutButton = new JButton(workoutExamples[j][0]);
-                workoutButton.setPreferredSize(new Dimension(150, 5)); // set buttons size
-                workoutButton = setWorkoutButtonIcon(workoutExamples[j][3], workoutButton);// gets icon
-                panel.add(workoutButton);// adds current button to the panel
+                workoutButton = new JButton();
+                // Set the current image(icon) to a JButton and adds it to panel
+                workoutButton = setWorkoutButtonIcon(workoutExamples[j][3], workoutButton);
+                // adds current button to the panel
+                workoutButton.setText(workoutExamples[j][0]);
+                panel.add(workoutButton);
             }
-            break;
+            return panel;
         }
-        return panel;
-    }
+    // TEST---------------------------------------------------------------------------------------------------------------------------------
+
+
+    // scrollable panel with workouts
+    // public JPanel createPanel() {
+    //     // TODO: Display prof. pics in 3 columns
+    //     JPanel panel = new JPanel();
+    //     panel.setBorder(new EmptyBorder(BORDER_NUMBER, BORDER_NUMBER, BORDER_NUMBER, BORDER_NUMBER));
+    //     String[][] workoutExamples = new String[][] {
+    //             { "Workout 1", "Rep", "Kcal", "tempWorkoutIcons/fitness.png" },
+    //             { "Workout 2", "Rep", "Kcal", "tempWorkoutIcons/workout.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 1", "Rep", "Kcal", "tempWorkoutIcons/fitness.png" },
+    //             { "Workout 2", "Rep", "Kcal", "tempWorkoutIcons/workout.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //             { "Workout 3", "Rep", "Kcal", "tempWorkoutIcons/yoga.png" },
+    //     };
+
+    //     // panel.setLayout(new GridLayout(workoutExamples.length, 10, 10,10));
+    //     panel.setLayout(new GridLayout(0, 1, 0, 10));
+    //     for (int i = 0; i < workoutExamples.length; i++) {
+    //         for (int j = 0; j < workoutExamples.length; j++) {
+    //             workoutButton = new JButton(workoutExamples[j][0]);
+    //             workoutButton.setPreferredSize(new Dimension(150, 5)); // set buttons size
+    //             workoutButton = setWorkoutButtonIcon(workoutExamples[j][3], workoutButton);// gets icon
+    //             panel.add(workoutButton);// adds current button to the panel
+    //         }
+    //         break;
+    //     }
+    //     return panel;
+    // }
 
     // setup button
     public void MyWorkoutsFrame() {
@@ -116,7 +146,7 @@ public class MyWokrouts extends JFrame implements ActionListener {
 
     public JButton setWorkoutButtonIcon(String picPath, JButton button) {
         ImageIcon imageIcon = new ImageIcon(picPath);
-        Image resizedImage = imageIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image resizedImage = imageIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(resizedImage, imageIcon.getDescription());
         button.setIcon(imageIcon);
         return button;
@@ -125,7 +155,6 @@ public class MyWokrouts extends JFrame implements ActionListener {
     // Adds all components to 'container'
     public void addComponentsToContainer() {
         topBar.add(backToHome);
-
     }
 
     // add action event
