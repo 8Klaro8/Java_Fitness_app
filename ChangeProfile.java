@@ -31,22 +31,21 @@ import java.awt.event.ActionListener;
 
 public class ChangeProfile extends JFrame implements ActionListener {
     static final int COLUMNS = 3;
-    static final int ROWS = 15;
     JButton profPicButton;
     public final String USER_FILE_PATH = "current_user/current_user.txt";
     JPanel panel;
 
     public ChangeProfile() throws IOException {
 
-        setTitle("MY IT app");
-        setLayout(new BorderLayout());
-        panel = createPanel();
-        add(BorderLayout.CENTER, new JScrollPane(panel));
-        setBounds(10, 10, 370, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setVisible(true);
+        this.setTitle("MY IT app");
+        this.setLayout(new BorderLayout());
+        this.panel = createPanel();
+        this.add(BorderLayout.CENTER, new JScrollPane(panel));
+        this.setBounds(10, 10, 370, 500);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
 
         // set icon
         ImageIcon image = new ImageIcon("Logo/lgo.png");
@@ -65,8 +64,8 @@ public class ChangeProfile extends JFrame implements ActionListener {
         for (int i = 0; i < objAllPathArray.length; i++) {
             strAllPathArray[i] = String.valueOf(objAllPathArray[i]);
         }
-        panel.setLayout(new GridLayout(ROWS, COLUMNS, 10, 10));
-        for (int i = 0; i < ROWS; i++) {
+        panel.setLayout(new GridLayout(numOfPics, COLUMNS, 10, 10));
+        for (int i = 0; i < numOfPics; i++) {
             for (int j = 0; j < numOfPics; j++) {
                 profPicButton = new JButton();
                 String lastElement = strAllPathArray[strAllPathArray.length - 1];

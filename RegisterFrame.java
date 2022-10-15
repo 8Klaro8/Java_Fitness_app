@@ -33,6 +33,7 @@ public class RegisterFrame extends JFrame implements ActionListener, LoginFormIn
         this.setBounds(10, 10, 370, 500);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         // labels & buttons
         userLabel = new JLabel("Username");

@@ -39,7 +39,6 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
     JCheckBox showPassword;
 
     MyFrame() {
-
         container = getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
 
@@ -48,6 +47,7 @@ public class MyFrame extends JFrame implements ActionListener, LoginFormInterFac
         this.setVisible(true);
         this.setBounds(10, 10, 370, 500);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
 
         // labels & buttons

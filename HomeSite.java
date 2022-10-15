@@ -31,11 +31,13 @@ public class HomeSite extends JFrame implements ActionListener {
     JLabel labelImage;
     JButton logout;
     JButton changeProfilePic;
+    JButton myWorkouts;
     SetProfileImage setProf = new SetProfileImage();
     public final String USER_FILE_PATH = "current_user/current_user.txt";
 
     HomeSite() throws IOException {
 
+        SwingUtilities.updateComponentTreeUI(this); // refresh page
         container = getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
 
@@ -45,11 +47,13 @@ public class HomeSite extends JFrame implements ActionListener {
         this.setBounds(10, 10, 370, 500);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         // labels & buttons
         profPicLabel = new JLabel();
         logout = new JButton("Logout");
         changeProfilePic = new JButton("Change Profile");
+        myWorkouts = new JButton("My Wokrouts");
 
         // add image to label
         // TODO insert here current prof pic path from db
@@ -68,7 +72,7 @@ public class HomeSite extends JFrame implements ActionListener {
         this.getContentPane().setBackground(Color.WHITE);
 
         HomeSiteFrame();
-
+        SwingUtilities.updateComponentTreeUI(this); // refresh page
     }
 
     // Sets up login screen/ frame
@@ -93,6 +97,8 @@ public class HomeSite extends JFrame implements ActionListener {
         changeProfilePic.setSize(new Dimension(120, 30));
         changeProfilePic.setLocation(125, 130);
         SwingUtilities.updateComponentTreeUI(this);
+        myWorkouts.setSize(new Dimension(120, 30));
+        myWorkouts.setLocation(125, 170);
     }
 
     // Adds all components to 'container'
@@ -100,6 +106,7 @@ public class HomeSite extends JFrame implements ActionListener {
         this.container.add(profPicLabel);
         this.container.add(logout);
         this.container.add(changeProfilePic);
+        this.container.add(myWorkouts);
     }
 
     public void logut_from_app() throws IOException {
@@ -112,6 +119,7 @@ public class HomeSite extends JFrame implements ActionListener {
     public void addActionEvent() {
         logout.addActionListener(this);
         changeProfilePic.addActionListener(this);
+        myWorkouts.addActionListener(this);
     }
 
     @Override
@@ -130,12 +138,24 @@ public class HomeSite extends JFrame implements ActionListener {
             } catch (Exception err) {
                 System.out.println(err.getMessage());
             }
+        } else if (e.getSource() == myWorkouts) {
+            try {
+                go_to_workouts();
+
+            } catch (Exception err) {
+                System.out.println(err.getMessage());
+            }
         }
     }
 
     public void go_to_ChangeProfile() throws IOException {
         this.dispose();
         new ChangeProfile();
+    }
+
+    public void go_to_workouts() throws IOException {
+        this.dispose();
+        new MyWokrouts();
     }
 }
 
